@@ -1,0 +1,27 @@
+﻿@model IList<User>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h1>Users</h1>
+<button type="button" class="btn" onclick="location.href='@Url.Action("Create", "User")'">Create new user</button>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@user.Name</td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,28 @@
+﻿@model User
+
+@{
+    ViewBag.Title = "Update user";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(x => x.Username)
+    @Html.TextBoxFor(x => x.Username, new {disabled = "disabled"})
+
+    @Html.LabelFor(x => x.Email)
+    @Html.TextBoxFor(x => x.Email)
+
+    @Html.LabelFor(x => x.Name)
+    @Html.TextBoxFor(x => x.Name)
+
+
+    <br />
+    <button type="submit" class="btn">Update</button>
+    <button type="button" class="btn" onclick="location.href='@Url.Action("Index", "User")'">Cancel</button>
+
+}
+
+@section scripts
+{
+    @Html.SetFocusTo(x => x.Email);
+}

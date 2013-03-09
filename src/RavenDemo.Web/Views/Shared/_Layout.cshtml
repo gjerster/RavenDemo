@@ -22,18 +22,16 @@
                     <a class="brand" href="#">RavenDB Demo</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#about">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("User", "Index", "User")</li>
                         </ul>
-                    </div><!--/.nav-collapse -->
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="container">
             @RenderBody()
-
         </div>
 
         @Scripts.Render("~/bundles/jquery")
