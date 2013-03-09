@@ -12,16 +12,15 @@ namespace RavenDemo.Web.Helpers
             sb.AppendLine("<div class='pagination'>");
             sb.AppendLine("<ul>");
 
-            sb.AppendFormat("<li class={0}><a href='{1}'>&laquo;</a></li>",
-                            pagedList.CurrentPage < 2 ? "disabled" : string.Empty, pagedList.CurrentPage - 1);
+            string cssClass = pagedList.CurrentPage < 2 ? "disabled" : string.Empty;
+            sb.AppendFormat("<li class={0}><a href='{1}'>&laquo;</a></li>", cssClass, pagedList.CurrentPage - 1);
             for (int page = 1; page < pagedList.NumberOfPages + 1; page++)
             {
-                sb.AppendFormat("<li class='{0}'><a href='{1}'>{1}</a></li>",
-                                page == pagedList.CurrentPage ? "active" : string.Empty, page);
+                cssClass = page == pagedList.CurrentPage ? "active" : string.Empty;
+                sb.AppendFormat("<li class='{0}'><a href='{1}'>{1}</a></li>", cssClass, page);
             }
-            sb.AppendFormat("<li class='{0}'><a href='{1}'>»</a></li>", pagedList.CurrentPage >= pagedList.NumberOfPages
-                                                                            ? "disabled"
-                                                                            : string.Empty, pagedList.CurrentPage + 1);
+            cssClass = pagedList.CurrentPage >= pagedList.NumberOfPages ? "disabled" : string.Empty;
+            sb.AppendFormat("<li class='{0}'><a href='{1}'>»</a></li>", cssClass, pagedList.CurrentPage + 1);
             sb.AppendLine("</ul>");
             sb.AppendLine("</div>");
             return MvcHtmlString.Create(sb.ToString());
