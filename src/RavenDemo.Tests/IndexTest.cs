@@ -21,17 +21,17 @@ namespace RavenDemo.Tests
         {
             using (EmbeddableDocumentStore store = NewDocumentStore())
             {
-                IndexCreation.CreateIndexes(typeof (SampleDataIndex).Assembly, store);
+                IndexCreation.CreateIndexes(typeof (CustomerSearchIndex).Assembly, store);
                 CreateSampleData(store);
 
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    IRavenQueryable<SampleDataIndex.ReducedResult> rq = session
-                        .Query<SampleDataIndex.ReducedResult, SampleDataIndex>()
+                    IRavenQueryable<CustomerSearchIndex.ReducedResult> rq = session
+                        .Query<CustomerSearchIndex.ReducedResult, CustomerSearchIndex>()
                         .Customize(customization => customization.WaitForNonStaleResultsAsOfNow());
-                    List<SampleData> result =
+                    List<Customer> result =
                         rq.Search(x => x.Query, query,escapeQueryOptions: EscapeQueryOptions.AllowPostfixWildcard)
-                          .As<SampleData>()
+                          .As<Customer>()
                           .Take(10)
                           .ToList();
                     Assert.NotEmpty(result);
@@ -43,7 +43,7 @@ namespace RavenDemo.Tests
         {
             using (IDocumentSession session = store.OpenSession())
             {
-                session.Store(new SampleData
+                session.Store(new Customer
                 {
                     Name = "Singapore",
                     Description = "SINGAPORE PTE LTD"
@@ -54,15 +54,15 @@ namespace RavenDemo.Tests
         }
     }
 
-    public class SampleData
+    public class Customer
     {
         public string Name { get; set; }
         public string Description { get; set; }
     }
 
-    public class SampleDataIndex : AbstractIndexCreationTask<SampleData, SampleDataIndex.ReducedResult>
+    public class CustomerSearchIndex : AbstractIndexCreationTask<Customer, CustomerSearchIndex.ReducedResult>
     {
-        public SampleDataIndex()
+        public CustomerSearchIndex()
         {
             Map = docs => from doc in docs
                           select new
