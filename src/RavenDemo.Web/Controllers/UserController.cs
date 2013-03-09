@@ -21,7 +21,7 @@ namespace RavenDemo.Web.Controllers
         {
             using (IDocumentSession session = _store.OpenSession())
             {
-                List<User> users = session.Query<User>().ToList();
+                List<User> users = session.Query<User>().Take(10).ToList();
                 return View(users);
             }
         }
@@ -36,16 +36,47 @@ namespace RavenDemo.Web.Controllers
         {
             using (IDocumentSession session = _store.OpenSession())
             {
-                var user = new User {Username = model.Username, Name = model.Name};
-                session.Store(user);
+                session.Store(model);
                 session.SaveChanges();
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(string id)
         {
-            return View();
+            using (IDocumentSession session = _store.OpenSession())
+            {
+                var model = session.Load<User>(id);
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Edit(User model)
+        {
+            using (IDocumentSession session = _store.OpenSession())
+            {
+                session.Store(model);
+                session.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Paging(int id=1)
+        {
+            using (IDocumentSession session = _store.OpenSession())
+            {
+                RavenQueryStatistics stats;
+                const int pageSize = 10;
+                List<User> users = session
+                    .Query<User>()
+                    .Statistics(out stats)
+                    .Take(pageSize)
+                    .Skip((id - 1)*pageSize)
+                    .ToList();
+                var pagedList = new PagedList<User>(id, pageSize, stats.TotalResults, users);
+                return View(pagedList);
+            }
         }
     }
 }

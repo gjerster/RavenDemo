@@ -3,18 +3,41 @@
 @{
     ViewBag.Title = "Update user";
 }
-
+<h1>Edit User: @Model.Username</h1>
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(x => x.Username)
-    @Html.TextBoxFor(x => x.Username, new {disabled = "disabled"})
+    <div class="row">
+        <div class="span4">
+            <fieldset>
+                <legend>User data</legend>
+                @Html.LabelFor(x => x.Username)
+                @Html.TextBoxFor(x => x.Username, new {@readonly = "readonly"})
 
-    @Html.LabelFor(x => x.Email)
-    @Html.TextBoxFor(x => x.Email)
+                @Html.LabelFor(x => x.Email)
+                @Html.TextBoxFor(x => x.Email)
 
-    @Html.LabelFor(x => x.Name)
-    @Html.TextBoxFor(x => x.Name)
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name)
+            </fieldset>
+        </div>
+        <div class="span4">
+        
+            <fieldset>
+                <legend>Address</legend>
+                @Html.LabelFor(x => x.Address.Street)
+                @Html.TextBoxFor(x => x.Address.Street)
 
+                @Html.LabelFor(x => x.Address.City)
+                @Html.TextBoxFor(x => x.Address.City)
+
+                @Html.LabelFor(x => x.Address.ZipCode)
+                @Html.TextBoxFor(x => x.Address.ZipCode)
+                
+                @Html.LabelFor(x => x.Address.Country)
+                @Html.TextBoxFor(x => x.Address.Country)
+            </fieldset>
+        </div>
+    </div>
 
     <br />
     <button type="submit" class="btn">Update</button>
