@@ -1,0 +1,33 @@
+﻿@model Order
+
+@{
+    ViewBag.Title = "Order details";
+}
+<h1>Order details</h1>
+
+<p>OrderId: @Model.Id</p>
+<p>Date: @Model.Created</p>
+<p>Customer Id: @Model.Created</p>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Product Number</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderLine in Model.OrderLines)
+        {
+            <tr>
+                <td>@orderLine.ProductNumber</td>
+                <td>@orderLine.Name</td>
+                <td>@orderLine.Description</td>
+                <td>@orderLine.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
