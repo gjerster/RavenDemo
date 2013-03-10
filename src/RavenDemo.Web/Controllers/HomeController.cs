@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Raven.Client;
+using RavenDemo.Web.Models;
 
 namespace RavenDemo.Web.Controllers
 {
@@ -14,7 +15,8 @@ namespace RavenDemo.Web.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var user = _session.Load<User>(1);
+            return View(user);
         }
     }
 }
